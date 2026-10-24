@@ -72,6 +72,7 @@ class WSRouter:
         except PluginStopped as err:
             message = {"type": MessageType.DISCARD.value, "id": call_id}
         except Exception as err:
+            self.logger.exception("Route %s failed (call ID %s)", route, call_id)
             error = {"name":err.__class__.__name__, "message":str(err), "traceback":format_exc()}
             message = {"type": MessageType.ERROR.value, "id": call_id, "error": error}
         
